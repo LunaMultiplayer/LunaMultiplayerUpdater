@@ -1,0 +1,16 @@
+C:\GitHub\LunaMultiPlayer\ClientUpdater\bin\Debug\ClientUpdater.exe
+C:\GitHub\LunaMultiPlayer\ClientUpdater\bin\Debug\ClientUpdater.pdb
+C:\GitHub\LunaMultiPlayer\ClientUpdater\bin\Debug\CommonUpdater.dll
+C:\GitHub\LunaMultiPlayer\ClientUpdater\bin\Debug\CommonUpdater.pdb
+C:\GitHub\LunaMultiPlayer\ClientUpdater\obj\Debug\ClientUpdater.csprojResolveAssemblyReference.cache
+C:\GitHub\LunaMultiPlayer\ClientUpdater\obj\Debug\ClientUpdater.csproj.CoreCompileInputs.cache
+C:\GitHub\LunaMultiPlayer\ClientUpdater\obj\Debug\ClientUpdater.exe
+C:\GitHub\LunaMultiPlayer\ClientUpdater\obj\Debug\ClientUpdater.pdb
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\bin\Debug\ClientUpdater.exe
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\bin\Debug\ClientUpdater.pdb
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\bin\Debug\CommonUpdater.dll
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\bin\Debug\CommonUpdater.pdb
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\obj\Debug\ClientUpdater.csprojResolveAssemblyReference.cache
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\obj\Debug\ClientUpdater.csproj.CoreCompileInputs.cache
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\obj\Debug\ClientUpdater.exe
+C:\GitHub\LunaMultiPlayerUpdater\ClientUpdater\obj\Debug\ClientUpdater.pdb

@@ -1,0 +1,66 @@
+# Reference: http://www.appveyor.com/docs/appveyor-yml
+# Notes:
+#   - Indent each level of configuration with 2 spaces. Do not use tabs!
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+version: 1.0.0.{build}
+image: Visual Studio 2017
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+environment:
+  smallversion: 1.0.0
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}-$(configuration)'
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+configuration:
+ - Debug
+platform: Any CPU
+build:
+  parallel: true
+  verbosity: minimal
+after_build:
+#ClientUpdater post build commands
+ - ps: mkdir "$env:appveyor_build_folder\FinalFiles\$env:configuration\LMPClientUpdater"
+ - ps: xcopy /s/y "$env:appveyor_build_folder\ClientUpdater\bin\$env:configuration\*.*" "$env:appveyor_build_folder\FinalFiles\$env:configuration\LMPClientUpdater"
+#ServerUpdater post build commands
+ - ps: mkdir "$env:appveyor_build_folder\FinalFiles\$env:configuration\LMPServerUpdater"
+ - ps: xcopy /s/y "$env:appveyor_build_folder\ServerUpdater\bin\$env:configuration\*.*" "$env:appveyor_build_folder\FinalFiles\$env:configuration\LMPServerUpdater"
+ #7zip everything
+ - ps: 7z a "$env:appveyor_build_folder\LunaMultiplayerUpdater-$env:configuration.zip" "$env:appveyor_build_folder\FinalFiles\$env:configuration\LMPClientUpdater" "$env:appveyor_build_folder\FinalFiles\$env:configuration\LMPServerUpdater"
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+ - path: .\LunaMultiplayerUpdater-$(configuration).zip
+   name: LunaMultiplayerUpdater-$(configuration).zip
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+ - provider: GitHub
+   tag: $(smallversion)-Draft
+   release: LMP Updater $(smallversion)-Draft
+   description: 'Build $(appveyor_build_version)'
+   artifact: LunaMultiplayerUpdater-$(configuration).zip
+   auth_token:
+    secure: zWJqDvz3LjR2J358JIJKICwghW/DWRzs73KWb3KApTLOreA4c8DN1tos+O3qBMR7
+   draft: true
+   force_update: true
+   on:
+    branch: master

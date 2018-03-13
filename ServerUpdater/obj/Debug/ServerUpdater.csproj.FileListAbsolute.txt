@@ -1,0 +1,16 @@
+C:\GitHub\LunaMultiPlayer\ServerUpdater\obj\Debug\ServerUpdater.csproj.CoreCompileInputs.cache
+C:\GitHub\LunaMultiPlayer\ServerUpdater\bin\Debug\ServerUpdater.exe
+C:\GitHub\LunaMultiPlayer\ServerUpdater\bin\Debug\ServerUpdater.pdb
+C:\GitHub\LunaMultiPlayer\ServerUpdater\bin\Debug\CommonUpdater.dll
+C:\GitHub\LunaMultiPlayer\ServerUpdater\bin\Debug\CommonUpdater.pdb
+C:\GitHub\LunaMultiPlayer\ServerUpdater\obj\Debug\ServerUpdater.csprojResolveAssemblyReference.cache
+C:\GitHub\LunaMultiPlayer\ServerUpdater\obj\Debug\ServerUpdater.exe
+C:\GitHub\LunaMultiPlayer\ServerUpdater\obj\Debug\ServerUpdater.pdb
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\bin\Debug\ServerUpdater.exe
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\bin\Debug\ServerUpdater.pdb
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\bin\Debug\CommonUpdater.dll
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\bin\Debug\CommonUpdater.pdb
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\obj\Debug\ServerUpdater.csprojResolveAssemblyReference.cache
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\obj\Debug\ServerUpdater.csproj.CoreCompileInputs.cache
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\obj\Debug\ServerUpdater.exe
+C:\GitHub\LunaMultiPlayerUpdater\ServerUpdater\obj\Debug\ServerUpdater.pdb
