@@ -1,6 +1,0 @@
-C:\GitHub\LunaMultiPlayer\Updater\bin\Debug\Updater.exe
-C:\GitHub\LunaMultiPlayer\Updater\bin\Debug\Updater.pdb
-C:\GitHub\LunaMultiPlayer\Updater\obj\Debug\Updater.csproj.CoreCompileInputs.cache
-C:\GitHub\LunaMultiPlayer\Updater\obj\Debug\Updater.exe
-C:\GitHub\LunaMultiPlayer\Updater\obj\Debug\Updater.pdb
-C:\GitHub\LunaMultiPlayer\Updater\obj\Debug\Updater.csprojResolveAssemblyReference.cache

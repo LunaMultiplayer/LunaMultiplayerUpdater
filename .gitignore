@@ -1,0 +1,12 @@
+*.user
+*.userprefs
+.vs/
+CommonUpdater/*.csproj.user
+CommonUpdater/bin/*
+CommonUpdater/obj/*
+ClientUpdater/*.csproj.user
+ClientUpdater/bin/*
+ClientUpdater/obj/*
+ServerUpdater/*.csproj.user
+ServerUpdater/bin/*
+ServerUpdater/obj/*

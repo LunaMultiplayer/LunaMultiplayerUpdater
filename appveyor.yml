@@ -28,6 +28,7 @@ assembly_info:
 
 configuration:
  - Debug
+ - Release
 platform: Any CPU
 build:
   parallel: true

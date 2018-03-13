@@ -1,3 +1,0 @@
-C:\GitHub\LunaMultiPlayer\Updater\bin\Release\Updater.exe
-C:\GitHub\LunaMultiPlayer\Updater\obj\Release\Updater.csproj.CoreCompileInputs.cache
-C:\GitHub\LunaMultiPlayer\Updater\obj\Release\Updater.exe
