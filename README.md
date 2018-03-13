@@ -25,11 +25,7 @@
 
 ---
 
-### Status:
-
-|   Branch   |   Build  |  Last commit  |   Activity    |
-| ---------- | -------- | ------------- | ------------- |
-| **master** |[![AppVeyor](https://img.shields.io/appveyor/ci/gavazquez/lunamultiplayerupdater/master.svg?logo=appveyor)](https://ci.appveyor.com/project/gavazquez/lunamultiplayerupdater/branch/master) | [![GitHub last commit](https://img.shields.io/github/last-commit/lunamultiplayer/lunamultiplayerupdater/master.svg)](../../commits/master) | [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/lunamultiplayer/lunamultiplayerupdater.svg)](../../commits/master)
+### Status: [![AppVeyor](https://img.shields.io/appveyor/ci/gavazquez/lunamultiplayerupdater/master.svg?logo=appveyor)](https://ci.appveyor.com/project/gavazquez/lunamultiplayerupdater/branch/master)
 
 ---
 
