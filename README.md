@@ -4,9 +4,9 @@
 </p>
 
 <p align="center">
-  <a href="../../releases"><img src="https://img.shields.io/github/release/lunamultiplayer/lunamultiplayer.svg" alt="Latest release" /></a>
-  <a href="../../releases"><img src="https://img.shields.io/github/downloads/lunamultiplayer/lunamultiplayer/total.svg" alt="Total downloads" />
-  <a href="../../"><img src="https://img.shields.io/github/search/lunamultiplayer/lunamultiplayer/goto.svg" alt="Total hits" />
+  <a href="../../releases"><img src="https://img.shields.io/github/release/lunamultiplayer/lunamultiplayerupdater.svg" alt="Latest release" /></a>
+  <a href="../../releases"><img src="https://img.shields.io/github/downloads/lunamultiplayer/lunamultiplayerupdater/total.svg" alt="Total downloads" />
+  <a href="../../"><img src="https://img.shields.io/github/search/lunamultiplayer/lunamultiplayerupdater/goto.svg" alt="Total hits" />
 </p>
 
 ---
@@ -29,11 +29,11 @@
 
 |   Branch   |   Build  |  Last commit  |   Activity    |
 | ---------- | -------- | ------------- | ------------- |
-| **master** |[![AppVeyor](https://img.shields.io/appveyor/ci/gavazquez/lunamultiplayerupdater/master.svg?logo=appveyor)](https://ci.appveyor.com/project/gavazquez/lunamultiplayer/branch/master) | [![GitHub last commit](https://img.shields.io/github/last-commit/lunamultiplayer/lunamultiplayerupdater/master.svg)](../../commits/master) | [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/lunamultiplayer/lunamultiplayerupdater.svg)](../../commits/master)
+| **master** |[![AppVeyor](https://img.shields.io/appveyor/ci/gavazquez/lunamultiplayerupdater/master.svg?logo=appveyor)](https://ci.appveyor.com/project/gavazquez/lunamultiplayerupdater/branch/master) | [![GitHub last commit](https://img.shields.io/github/last-commit/lunamultiplayer/lunamultiplayerupdater/master.svg)](../../commits/master) | [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/lunamultiplayer/lunamultiplayerupdater.svg)](../../commits/master)
 
 ---
 
 <p align="center">
   <a href="mailto:gavazquez@gmail.com"><img src="https://img.shields.io/badge/email-gavazquez@gmail.com-blue.svg?style=flat" alt="Email: gavazquez@gmail.com" /></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/github/license/lunamultiplayer/LunaMultiPlayer.svg" alt="License" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/lunamultiplayer/lunamultiplayerupdater.svg" alt="License" /></a>
 </p>
