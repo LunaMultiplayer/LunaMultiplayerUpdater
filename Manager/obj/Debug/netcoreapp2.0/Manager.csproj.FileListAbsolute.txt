@@ -1,0 +1,11 @@
+F:\LunaMultiplayerUpdater\Manager\bin\Debug\netcoreapp2.0\Manager.deps.json
+F:\LunaMultiplayerUpdater\Manager\bin\Debug\netcoreapp2.0\Manager.runtimeconfig.json
+F:\LunaMultiplayerUpdater\Manager\bin\Debug\netcoreapp2.0\Manager.runtimeconfig.dev.json
+F:\LunaMultiplayerUpdater\Manager\bin\Debug\netcoreapp2.0\Manager.dll
+F:\LunaMultiplayerUpdater\Manager\bin\Debug\netcoreapp2.0\Manager.pdb
+F:\LunaMultiplayerUpdater\Manager\obj\Debug\netcoreapp2.0\Manager.csprojResolveAssemblyReference.cache
+F:\LunaMultiplayerUpdater\Manager\obj\Debug\netcoreapp2.0\Manager.csproj.CoreCompileInputs.cache
+F:\LunaMultiplayerUpdater\Manager\obj\Debug\netcoreapp2.0\Manager.AssemblyInfoInputs.cache
+F:\LunaMultiplayerUpdater\Manager\obj\Debug\netcoreapp2.0\Manager.AssemblyInfo.cs
+F:\LunaMultiplayerUpdater\Manager\obj\Debug\netcoreapp2.0\Manager.dll
+F:\LunaMultiplayerUpdater\Manager\obj\Debug\netcoreapp2.0\Manager.pdb
