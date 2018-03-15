@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Manager
 {
@@ -10,36 +11,66 @@ namespace Manager
 
         {
 
-            kerbalCheck();
+           processCheck();
 
             Menu();
 
         }
 
-        private static void kerbalCheck()
+        private static void processCheck()
         {
-            Process[] kerbalProcess = Process.GetProcessesByName("KSP");
-            Process[] kerbalProcess64 = Process.GetProcessesByName("KSP_x64");
-            if (kerbalProcess.Length > 0)
+            try
             {
-                Console.WriteLine("Kerbal Space Program is already Running ");
+                foreach (Process proc in Process.GetProcessesByName("KSP_x64"))
+                {
+                    proc.Kill();
+                }
             }
-            if (kerbalProcess64.Length > 0)
+            catch (Exception ex)
             {
-                Console.WriteLine("Kerbal Space Program is already Running ");
+               Console.Write(ex.Message);
             }
-            else
+            try
             {
-                Console.WriteLine("Kerbal Space Program is not running.");
+                foreach (Process proc in Process.GetProcessesByName("KSP"))
+                {
+                    proc.Kill();
+                }
             }
-
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("Updater"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
         }
         private static void Menu()
         {
             var menu = new EasyConsole.Menu()
-   .Add("Run Kerbal Space Program", () => Console.WriteLine("Booting Kerbal Space Program"))
-   .Add("Install/Update LunaMultiplayer", () => Console.WriteLine("Luna Selected"));
+   .Add("Run Kerbal Space Program", () => kerbalLaunch())
+   .Add("Install/Update LunaMultiplayer", () => lunaMultiplayerUpdate());
             menu.Display();
+        }
+        private static void kerbalLaunch()
+        {
+            Console.WriteLine("Booting Kerbal Space Program");
+            Process.Start(@"F:\SteamLibrary\steamapps\common\Kerbal Space Program\KSP_x64.exe");
+
+        }
+        private static void lunaMultiplayerUpdate()
+        {
+            Console.WriteLine("Booting Kerbal Space Program");
+            Process.Start(@"F:\SteamLibrary\steamapps\common\Kerbal Space Program\Updater.exe");
+
         }
     }
 }
