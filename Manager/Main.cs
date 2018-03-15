@@ -67,17 +67,21 @@ namespace LunaManager
             var input = double.Parse(Console.ReadLine());
             if (input == 1)
             {
+                clearScreen();
                 processCheck();
+                LunaCheck();
                 kerbalLaunch();
             }
             if (input == 2)
             {
+                clearScreen();
                 processCheck();
                 LunaCheck();
                 lunaMultiplayerUpdate();
             }
             else
-                Console.WriteLine("Invalid Option");
+                clearScreen();
+            Console.WriteLine("Invalid Option");
             Menu();
         }
 
@@ -88,6 +92,7 @@ namespace LunaManager
         }
         private static void kerbalLaunch()
         {
+
             processCheck();
             Console.WriteLine("Booting Kerbal Space Program");
             string kerbal64 = @"KSP_x64.exe";
@@ -97,7 +102,10 @@ namespace LunaManager
                 Console.WriteLine("Can not start Kerbal Space Program. Did you place this in the KSP installation folder?");
             Menu();
         }
-
+        private static void clearScreen()
+        {
+            Console.Clear();
+        }
 
         private static void lunaMultiplayerUpdate()
         {
