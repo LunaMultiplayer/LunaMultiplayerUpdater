@@ -2,14 +2,19 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.IO.Compression;
+using System.Threading;
 
 namespace LunaManager
 {
     class MainMenu
     {
+        private static Thread thread;
+        [STAThread]
         static void Main()
 
         {
+            thread = new Thread(BusyWorkThread);
             processCheck();
             LunaCheck();
             Menu();
@@ -96,7 +101,7 @@ namespace LunaManager
 
         private static void lunaMultiplayerUpdate()
         {
-            string lunaUpdater = @"Updater.exe";
+            string lunaUpdater = @"ClientUpdater.exe";
 
             processCheck();
             LunaCheck();
@@ -106,7 +111,7 @@ namespace LunaManager
         }
         private static void LunaCheck()
         {
-            string lunaUpdater = @"Updater.exe";
+            string lunaUpdater = @"ClientUpdater.exe";
 
             if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), lunaUpdater)))
             {
@@ -118,15 +123,25 @@ namespace LunaManager
                 string zipPath = Path.Combine(Directory.GetCurrentDirectory(), "LunaMultiplayerUpdater-Release.zip");
                 string extractPath = Directory.GetCurrentDirectory();
 
-                Console.WriteLine("Download completed. Extraction started.");
-                //Get a unzipper class as 
+                Console.WriteLine("Download completed. Extraction Needed.");
+                Thread.Sleep(1000);
+                Console.ReadKey();
+                Environment.Exit(1);
+
 
             }
             else
             {
-                Console.WriteLine("Luna Updater has been found! Yay");
+                Console.WriteLine("Luna Updater is located!\n");
             }
         
+        }
+        public static void BusyWorkThread()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 }

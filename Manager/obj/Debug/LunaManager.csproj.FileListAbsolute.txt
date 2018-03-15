@@ -12,6 +12,5 @@ F:\SteamLibrary\steamapps\common\Kerbal Space Program\LunaManager.exe
 F:\SteamLibrary\steamapps\common\Kerbal Space Program\LunaManager.pdb
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csprojResolveAssemblyReference.cache
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csproj.CoreCompileInputs.cache
-D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csproj.CopyComplete
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.exe
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.pdb
