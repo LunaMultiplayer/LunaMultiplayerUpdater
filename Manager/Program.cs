@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
+using System.Threading;
 
 namespace Manager
 {
@@ -68,7 +70,7 @@ namespace Manager
         }
         private static void lunaMultiplayerUpdate()
         {
-            Console.WriteLine("Booting Kerbal Space Program");
+            Console.WriteLine("Booting Luna Updater");
             Process.Start(@"F:\SteamLibrary\steamapps\common\Kerbal Space Program\Updater.exe");
 
         }

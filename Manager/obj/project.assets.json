@@ -690,11 +690,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\LunaMultiplayerUpdater\\Manager\\Manager.csproj",
+      "projectUniqueName": "F:\\LunaMultiplayerUpdaterMein\\Manager\\Manager.csproj",
       "projectName": "Manager",
-      "projectPath": "F:\\LunaMultiplayerUpdater\\Manager\\Manager.csproj",
+      "projectPath": "F:\\LunaMultiplayerUpdaterMein\\Manager\\Manager.csproj",
       "packagesPath": "C:\\Users\\TheSy\\.nuget\\packages\\",
-      "outputPath": "F:\\LunaMultiplayerUpdater\\Manager\\obj\\",
+      "outputPath": "F:\\LunaMultiplayerUpdaterMein\\Manager\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -729,6 +729,7 @@
             "version": "[1.1.0, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.0.0, )",
             "autoReferenced": true
