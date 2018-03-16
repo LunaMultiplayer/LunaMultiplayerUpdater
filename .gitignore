@@ -1,6 +1,7 @@
 *.user
 *.userprefs
 .vs/
+obj/
 CommonUpdater/*.csproj.user
 CommonUpdater/bin/*
 CommonUpdater/obj/*
