@@ -2,153 +2,139 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.IO.Compression;
 using System.Threading;
 
 namespace LunaManager
 {
-    class MainMenu
+    public class MainMenu
     {
-        private static Thread thread;
         [STAThread]
-        static void Main()
-
+        public static void Main()
         {
-            thread = new Thread(BusyWorkThread);
-            processCheck();
+            ProcessCheck();
             LunaCheck();
             Menu();
-
         }
 
-        private static void processCheck()
+        private static void ProcessCheck()
         {
             try
             {
-                foreach (Process proc in Process.GetProcessesByName("KSP_x64"))
+                foreach (var proc in Process.GetProcessesByName("KSP_x64"))
                 {
                     proc.Kill();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.Write(ex.Message);
+                Console.Write(e);
             }
             try
             {
-                foreach (Process proc in Process.GetProcessesByName("KSP"))
+                foreach (var proc in Process.GetProcessesByName("KSP"))
                 {
                     proc.Kill();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.Write(ex.Message);
+                Console.Write(e);
             }
             try
             {
-                foreach (Process proc in Process.GetProcessesByName("Updater"))
+                foreach (var proc in Process.GetProcessesByName("Updater"))
                 {
                     proc.Kill();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.Write(ex.Message);
+                Console.Write(e);
             }
 
         }
+
         private static void Menu()
         {
-            Console.WriteLine("Luna Manager for Kerbal Space Program.");
-            Console.WriteLine("Here are your options:");
-            showCommands();
-            Console.WriteLine("Please enter a number to decide");
-            var input = double.Parse(Console.ReadLine());
-            if (input == 1)
+            while (true)
             {
-                clearScreen();
-                processCheck();
-                LunaCheck();
-                kerbalLaunch();
+                Console.WriteLine("Luna Manager for Kerbal Space Program.");
+                Console.WriteLine("Here are your options:");
+                ShowCommands();
+                Console.WriteLine("Please enter a number to decide");
+                var input = int.Parse(Console.ReadLine());
+                if (input == 1)
+                {
+                    ClearScreen();
+                    ProcessCheck();
+                    LunaCheck();
+                    KerbalLaunch();
+                }
+
+                if (input == 2)
+                {
+                    ClearScreen();
+                    ProcessCheck();
+                    LunaCheck();
+                    LunaMultiplayerUpdate();
+                }
+                else
+                    ClearScreen();
+
+                Console.WriteLine("Invalid Option");
             }
-            if (input == 2)
-            {
-                clearScreen();
-                processCheck();
-                LunaCheck();
-                lunaMultiplayerUpdate();
-            }
-            else
-                clearScreen();
-            Console.WriteLine("Invalid Option");
-            Menu();
         }
 
-        private static void showCommands()
+        private static void ShowCommands()
         {
             Console.WriteLine("1. Start up Kerbal Space Program ");
             Console.WriteLine("2. Install/Update LunaMultiplayer");
         }
-        private static void kerbalLaunch()
-        {
 
-            processCheck();
+        private static void KerbalLaunch()
+        {
+            ProcessCheck();
             Console.WriteLine("Booting Kerbal Space Program");
-            string kerbal64 = @"KSP_x64.exe";
-            if (File.Exists(kerbal64))
-                Process.Start(kerbal64);
+            if (File.Exists("KSP_x64.exe"))
+                Process.Start("KSP_x64.exe");
             else
                 Console.WriteLine("Can not start Kerbal Space Program. Did you place this in the KSP installation folder?");
             Menu();
         }
-        private static void clearScreen()
+
+        private static void ClearScreen()
         {
             Console.Clear();
         }
 
-        private static void lunaMultiplayerUpdate()
+        private static void LunaMultiplayerUpdate()
         {
-            string lunaUpdater = @"ClientUpdater.exe";
-
-            processCheck();
+            ProcessCheck();
             LunaCheck();
-            Process.Start(lunaUpdater);
+            Process.Start("ClientUpdater.exe");
             Menu();
-
         }
+
         private static void LunaCheck()
         {
-            string lunaUpdater = @"ClientUpdater.exe";
-
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), lunaUpdater)))
+            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "ClientUpdater.exe")))
             {
-                Console.WriteLine(" The \"Updater.exe\" is not in the main KSP folder");
+                Console.WriteLine("The \"Updater.exe\" is not in the main KSP folder");
                 Console.WriteLine("Installing Luna Updater....");
-                WebClient wb = new WebClient();
-                wb.DownloadFile("https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip", "LunaMultiplayerUpdater-Release.zip");
-               
-                string zipPath = Path.Combine(Directory.GetCurrentDirectory(), "LunaMultiplayerUpdater-Release.zip");
-                string extractPath = Directory.GetCurrentDirectory();
+
+                using (var wb = new WebClient())
+                {
+                    wb.DownloadFile("https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip", "LunaMultiplayerUpdater-Release.zip");
+                }
 
                 Console.WriteLine("Download completed. Extraction Needed.");
                 Thread.Sleep(1000);
                 Console.ReadKey();
                 Environment.Exit(1);
-
-
             }
             else
             {
                 Console.WriteLine("Luna Updater is located!\n");
-            }
-        
-        }
-        public static void BusyWorkThread()
-        {
-            while (true)
-            {
-                Thread.Sleep(1000);
             }
         }
     }
