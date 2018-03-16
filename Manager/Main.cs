@@ -1,26 +1,34 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.IO.Compression;
 using System.Threading;
+using System.Windows.Forms;
+using System.Net.Http;
 
 namespace LunaManager
 {
     class MainMenu
     {
         private static Thread thread;
+        public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMPClientUpdater");
+        public const string FileName = "LunaMultiplayerUpdater-Release.zip";
         [STAThread]
         static void Main()
-
         {
+            
+     
             thread = new Thread(BusyWorkThread);
             processCheck();
             LunaCheck();
             Menu();
 
         }
-
+     
+       
+        
         private static void processCheck()
         {
             try
@@ -58,6 +66,21 @@ namespace LunaManager
             }
 
         }
+        
+        private static void kerbalSafeLaunch()
+        {
+            clearScreen();
+            processCheck();
+            LunaCheck();
+            kerbalLaunch();
+        }
+        private static void lunaSafeUpdate()
+        {
+            clearScreen();
+            processCheck();
+            LunaCheck();
+            lunaMultiplayerUpdate();
+        }
         private static void Menu()
         {
             Console.WriteLine("Luna Manager for Kerbal Space Program.");
@@ -67,23 +90,20 @@ namespace LunaManager
             var input = double.Parse(Console.ReadLine());
             if (input == 1)
             {
-                clearScreen();
-                processCheck();
-                LunaCheck();
-                kerbalLaunch();
+                kerbalSafeLaunch();
+
             }
             if (input == 2)
             {
-                clearScreen();
-                processCheck();
-                LunaCheck();
-                lunaMultiplayerUpdate();
+               lunaSafeUpdate();
             }
             else
                 clearScreen();
             Console.WriteLine("Invalid Option");
             Menu();
         }
+
+  
 
         private static void showCommands()
         {
@@ -130,26 +150,54 @@ namespace LunaManager
                
                 string zipPath = Path.Combine(Directory.GetCurrentDirectory(), "LunaMultiplayerUpdater-Release.zip");
                 string extractPath = Directory.GetCurrentDirectory();
+                ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), FileName), FolderToDecompress);
+                string downloadUrl;
+                using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
+                {
+                    downloadUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
+                }
 
-                Console.WriteLine("Download completed. Extraction Needed.");
-                Thread.Sleep(1000);
-                Console.ReadKey();
-                Environment.Exit(1);
+                if (!string.IsNullOrEmpty(downloadUrl))
+                {
+                    Console.WriteLine($"Downloading LMP from: {downloadUrl} Please wait...");
+                    try
+                    {
+                        CleanTempFiles();
+                        using (var client = new WebClient())
+                        {
+                            client.DownloadFile(downloadUrl, Path.Combine(Path.GetTempPath(), FileName));
+                            Console.WriteLine($"Downloading succeeded! Path: {Path.Combine(Path.GetTempPath(), FileName)}");
+                        }
 
+                        Console.WriteLine($"Decompressing file to {FolderToDecompress}");
+                        ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), FileName), FolderToDecompress);
+
+                        CopyFilesFromTempToDestination(product);
+
+                        Console.WriteLine("-----------------===========FINISHED===========-----------------");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                    finally
+                    {
+                        CleanTempFiles();
+                    }
+                }
 
             }
             else
             {
-                Console.WriteLine("Luna Updater is located!\n");
+                clearScreen();
             }
         
         }
         public static void BusyWorkThread()
         {
-            while (true)
-            {
-                Thread.Sleep(1000);
-            }
+              
+            
         }
     }
 }

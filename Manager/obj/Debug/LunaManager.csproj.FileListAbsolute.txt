@@ -14,3 +14,4 @@ D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csprojResolveAssembl
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csproj.CoreCompileInputs.cache
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.exe
 D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.pdb
+D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csproj.CopyComplete
