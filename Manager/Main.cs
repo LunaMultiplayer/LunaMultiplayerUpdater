@@ -22,11 +22,12 @@ namespace LunaManager
         public static object product { get; private set; }
 
         [STAThread]
+
+       
         static void Main()
         {
-            
-     
-            thread = new Thread(BusyWorkThread);
+            thread = new Thread(Main);
+            installDirCheck();
             processCheck();
             LunaCheck();
             Menu();
@@ -37,7 +38,22 @@ namespace LunaManager
         {
             Client
         }
+        private static void installDirCheck()
+        {
 
+            string path = Directory.GetCurrentDirectory();
+            string lastFolderName = Path.GetFileName(Path.GetDirectoryName(path));
+            string target = @"Kerbal Space Program";
+            if (lastFolderName.Equals(Directory.GetCurrentDirectory() != target))
+            {
+                Console.WriteLine("Something is wrong... This is not the Kerbal Space Program Folder!\n HALT");
+                Console.WriteLine("The current directory is {0}", path);
+                Console.WriteLine(Path.GetDirectoryName(path));
+                Console.WriteLine("The manager will now end until this is resolved.");
+                var input = Console.ReadLine();
+                Application.Exit();
+            }
+        }
         private static void processCheck()
         {
             try
@@ -45,6 +61,7 @@ namespace LunaManager
                 foreach (Process proc in Process.GetProcessesByName("KSP_x64"))
                 {
                     proc.Kill();
+                    Console.WriteLine("Kerbal Space Program was found running and has been killed.");
                 }
             }
             catch (Exception ex)
@@ -56,6 +73,7 @@ namespace LunaManager
                 foreach (Process proc in Process.GetProcessesByName("KSP"))
                 {
                     proc.Kill();
+                    Console.WriteLine("Kerbal Space Program was found running and has been killed.");
                 }
             }
             catch (Exception ex)
@@ -67,6 +85,7 @@ namespace LunaManager
                 foreach (Process proc in Process.GetProcessesByName("Updater"))
                 {
                     proc.Kill();
+                    Console.WriteLine("Luna Updater was found running and has been killed.");
                 }
             }
             catch (Exception ex)
@@ -112,26 +131,6 @@ namespace LunaManager
             Menu();
         }
 
-
-        private static void CopyFilesFromTempToDestination(ProductToDownload product)
-        {
-            var productFolderName = ("LMPClientUpdater");
-            foreach (var dirPath in Directory.GetDirectories(Path.Combine(FolderToDecompress, productFolderName), "*", SearchOption.AllDirectories))
-            {
-                var destFolder = dirPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
-                Console.WriteLine($"Creating dest folder: {destFolder}");
-                Directory.CreateDirectory(destFolder);
-            }
-
-            foreach (var newPath in Directory.GetFiles(Path.Combine(FolderToDecompress, productFolderName), "*.*", SearchOption.AllDirectories))
-            {
-                var destPath = newPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
-                Console.WriteLine($"Copying {Path.GetFileName(newPath)} to {destPath}");
-                File.Copy(newPath, destPath, true);
-            }
-        }
-
-
         private static void CleanTempFiles()
         {
             try
@@ -150,11 +149,11 @@ namespace LunaManager
 
         private static async Task<string> GetDownloadUrl(HttpClient client)
         {
-            using (var response = await client.GetAsync(ProjectUrl))
+            using (HttpResponseMessage response = await client.GetAsync(ProjectUrl))
             {
                 response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
+                string content = await response.Content.ReadAsStringAsync();
             }
 
             return null;
@@ -183,7 +182,7 @@ namespace LunaManager
                     Console.WriteLine($"Decompressing file to {FolderToDecompress}");
                     ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), FileName), FolderToDecompress);
 
-                    CopyFilesFromTempToDestination(product);
+                    CopyFilesFromTempToDestination();
 
                     Console.WriteLine("-----------------===========FINISHED===========-----------------");
                 }
@@ -197,11 +196,6 @@ namespace LunaManager
                     CleanTempFiles();
                 }
             }
-        }
-        public static void BusyWorkThread()
-        {
-
-
         }
 
         private static void showCommands()
@@ -248,29 +242,27 @@ namespace LunaManager
                 Console.WriteLine("Installing Luna Updater...."); 
                 string zipPath = Path.Combine(Directory.GetCurrentDirectory(), "LunaMultiplayerUpdater-Release.zip");
                 string extractPath = Directory.GetCurrentDirectory();
-                string downloadUrl;
-                using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
                 {
-                    downloadUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
+                    ProjectUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
                     WebClient wb = new WebClient();
                 }
 
-                if (!string.IsNullOrEmpty(downloadUrl))
+                if (!string.IsNullOrEmpty(ProjectUrl))
                 {
-                    Console.WriteLine($"Downloading LMP from: {downloadUrl} Please wait...");
+                    Console.WriteLine($"Downloading LMP from: {ProjectUrl} Please wait...");
                     try
                     {
                         CleanTempFiles();
                         using (var client = new WebClient())
                         {
-                            client.DownloadFile(downloadUrl, Path.Combine(Path.GetTempPath(), FileName));
+                            client.DownloadFile(ProjectUrl, Path.Combine(Path.GetTempPath(), FileName));
                             Console.WriteLine($"Downloading succeeded! Path: {Path.Combine(Path.GetTempPath(), FileName)}");
                         }
 
                         Console.WriteLine($"Decompressing file to {FolderToDecompress}");
                         ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), FileName), FolderToDecompress);
                         DownloadAndReplaceFiles(ProductToDownload.Client);
-                        CopyFilesFromTempToDestination(product);
+                        CopyFilesFromTempToDestination();
 
                         Console.WriteLine("-----------------===========FINISHED===========-----------------");
                     }
@@ -294,7 +286,7 @@ namespace LunaManager
         
         }
 
-        private static void CopyFilesFromTempToDestination(object product)
+        private static void CopyFilesFromTempToDestination()
         {
             var productFolderName = "LMPClientUpdater";
             foreach (var dirPath in Directory.GetDirectories(Path.Combine(FolderToDecompress, productFolderName), "*", SearchOption.AllDirectories))
@@ -309,18 +301,6 @@ namespace LunaManager
                 var destPath = newPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
                 Console.WriteLine($"Copying {Path.GetFileName(newPath)} to {destPath}");
                 File.Copy(newPath, destPath, true);
-            }
-        }
-  
-        private static object GetProductFolderName(ProductToDownload product)
-        {
-            switch (product)
-            {
-                case ProductToDownload.Client:
-                    return "LMPClientUpdater";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(product), product, null);
             }
         }
     }
