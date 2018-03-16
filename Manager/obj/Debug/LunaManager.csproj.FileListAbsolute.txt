@@ -1,0 +1,16 @@
+D:\KSPManager\LunaManager\bin\Debug\LunaManager.exe.config
+D:\KSPManager\LunaManager\bin\Debug\LunaManager.exe
+D:\KSPManager\LunaManager\bin\Debug\LunaManager.pdb
+D:\KSPManager\LunaManager\bin\Debug\EasyConsole.dll
+D:\KSPManager\LunaManager\obj\Debug\LunaManager.csprojResolveAssemblyReference.cache
+D:\KSPManager\LunaManager\obj\Debug\LunaManager.csproj.CoreCompileInputs.cache
+D:\KSPManager\LunaManager\obj\Debug\LunaManager.csproj.CopyComplete
+D:\KSPManager\LunaManager\obj\Debug\LunaManager.exe
+D:\KSPManager\LunaManager\obj\Debug\LunaManager.pdb
+F:\SteamLibrary\steamapps\common\Kerbal Space Program\LunaManager.exe.config
+F:\SteamLibrary\steamapps\common\Kerbal Space Program\LunaManager.exe
+F:\SteamLibrary\steamapps\common\Kerbal Space Program\LunaManager.pdb
+D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csprojResolveAssemblyReference.cache
+D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.csproj.CoreCompileInputs.cache
+D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.exe
+D:\git\LunaMultiplayerUpdater\Manager\obj\Debug\LunaManager.pdb
