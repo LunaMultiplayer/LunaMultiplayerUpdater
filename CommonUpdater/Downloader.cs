@@ -18,6 +18,46 @@ namespace CommonUpdater
         public const string FileName = "LunaMultiplayer-Debug.zip";
         public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMP");
 
+        public static void DownloadAndReplaceFiles(ProductToDownload product)
+        {
+            string downloadUrl;
+            using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                downloadUrl = GetDownloadUrl(client).Result;
+            }
+
+            if (!string.IsNullOrEmpty(downloadUrl))
+            {
+                Console.WriteLine($"Downloading LMP from: {downloadUrl} Please wait...");
+                try
+                {
+                    CleanTempFiles();
+                    using (var client = new WebClient())
+                    {
+                        client.DownloadFile(downloadUrl, Path.Combine(Path.GetTempPath(), FileName));
+                        Console.WriteLine($"Downloading succeeded! Path: {Path.Combine(Path.GetTempPath(), FileName)}");
+                    }
+
+                    Console.WriteLine($"Decompressing file to {FolderToDecompress}");
+                    ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), FileName), FolderToDecompress);
+
+                    CopyFilesFromTempToDestination(product);
+
+                    Console.WriteLine("-----------------===========FINISHED===========-----------------");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    CleanTempFiles();
+                }
+            }
+        }
+
         private static void CopyFilesFromTempToDestination(ProductToDownload product)
         {
             var productFolderName = GetProductFolderName(product);

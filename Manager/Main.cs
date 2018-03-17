@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace LunaManager
 {
@@ -40,15 +41,13 @@ namespace LunaManager
         }
         private static void installDirCheck()
         {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            string folder = new DirectoryInfo(path).Name;
 
-            string path = Directory.GetCurrentDirectory();
-            string lastFolderName = Path.GetFileName(Path.GetDirectoryName(path));
             string target = @"Kerbal Space Program";
-            if (lastFolderName.Equals(Directory.GetCurrentDirectory() != target))
+            if (folder != target)
             {
-                Console.WriteLine("Something is wrong... This is not the Kerbal Space Program Folder!\n HALT");
-                Console.WriteLine("The current directory is {0}", path);
-                Console.WriteLine(Path.GetDirectoryName(path));
+                Console.WriteLine("This is not the Kerbal Space Program Folder!\n HALT");
                 Console.WriteLine("The manager will now end until this is resolved.");
                 var input = Console.ReadLine();
                 Application.Exit();
