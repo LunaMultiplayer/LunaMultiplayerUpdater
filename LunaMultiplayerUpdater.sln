@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientUpdater", "ClientUpda
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerUpdater", "ServerUpdater\ServerUpdater.csproj", "{D70BB8FC-E256-4EDD-B39B-A8B0607EC778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunaManager", "Manager\LunaManager.csproj", "{FE6002F6-7441-44F2-995B-1F131835F1A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunaManager", "LunaManager\LunaManager.csproj", "{FE6002F6-7441-44F2-995B-1F131835F1A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

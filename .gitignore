@@ -12,6 +12,6 @@ ClientUpdater/obj/*
 ServerUpdater/*.csproj.user
 ServerUpdater/bin/*
 ServerUpdater/obj/*
-Manager/*.csproj.user
-Manager/bin/*
-Manager/obj/*
+LunaManager/*.csproj.user
+LunaManager/bin/*
+LunaManager/obj/*

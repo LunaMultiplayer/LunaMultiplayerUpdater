@@ -20,8 +20,6 @@ namespace LunaManager
         public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMPClientUpdater");
         public const string FileName = "LunaMultiplayerUpdater-Release.zip";
         public static string ProjectUrl = $"{ApiUrl}/LunaMultiplayerUpdater-Release.zip";
-        public static object Downloader { get; private set; }
-        public static object Product { get; private set; }
 
         [STAThread]
         public static void Main()
@@ -200,10 +198,10 @@ namespace LunaManager
         }
         private static void KerbalLaunch()
         {
+            const string kerbal64 = @"KSP_x64.exe";
 
             ProcessCheck();
             Console.WriteLine("Booting Kerbal Space Program");
-            var kerbal64 = @"KSP_x64.exe";
             if (File.Exists(kerbal64))
                 Process.Start(kerbal64);
             else
@@ -217,7 +215,7 @@ namespace LunaManager
 
         private static void LunaMultiplayerUpdate()
         {
-            var lunaUpdater = @"ClientUpdater.exe";
+            const string lunaUpdater = @"ClientUpdater.exe";
 
             ProcessCheck();
             LunaCheck();
@@ -234,12 +232,6 @@ namespace LunaManager
             {
                 Console.WriteLine(" The \"Updater.exe\" is not in the main KSP folder");
                 Console.WriteLine("Installing Luna Updater....");
-                var zipPath = Path.Combine(Directory.GetCurrentDirectory(), "LunaMultiplayerUpdater-Release.zip");
-                var extractPath = Directory.GetCurrentDirectory();
-                {
-                    ProjectUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
-                    var wb = new WebClient();
-                }
 
                 if (!string.IsNullOrEmpty(ProjectUrl))
                 {
@@ -281,7 +273,7 @@ namespace LunaManager
 
         private static void CopyFilesFromTempToDestination()
         {
-            var productFolderName = "LMPClientUpdater";
+            const string productFolderName = "LMPClientUpdater";
             foreach (var dirPath in Directory.GetDirectories(Path.Combine(FolderToDecompress, productFolderName), "*", SearchOption.AllDirectories))
             {
                 var destFolder = dirPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
