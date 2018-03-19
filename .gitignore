@@ -1,5 +1,6 @@
 *.user
 *.userprefs
+.idea/
 .vs/
 obj/
 CommonUpdater/*.csproj.user
