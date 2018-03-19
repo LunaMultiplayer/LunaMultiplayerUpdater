@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,7 +16,6 @@ namespace LunaManager
 
     public class MainMenu
     {
-        private static Thread _thread;
         public const string ApiUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0";
         public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMPClientUpdater");
         public const string FileName = "LunaMultiplayerUpdater-Release.zip";
@@ -28,7 +26,6 @@ namespace LunaManager
         [STAThread]
         public static void Main()
         {
-            _thread = new Thread(Main);
             InstallDirCheck();
             ProcessCheck();
             LunaCheck();
@@ -41,7 +38,7 @@ namespace LunaManager
             var path = AppDomain.CurrentDomain.BaseDirectory;
             var folder = new DirectoryInfo(path).Name;
 
-            var target = @"Kerbal Space Program";
+            const string target = @"Kerbal Space Program";
             if (folder != target)
             {
                 Console.WriteLine("This is not the Kerbal Space Program Folder!\n HALT");
