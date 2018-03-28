@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LunaManager</name>
+    </assembly>
+    <members>
+        <member name="T:LunaManager.MainMenu">
+            <summary>
+              <para>Contains main method. Uses inheritence to build up menu.</para>
+              <para>Contains checks and validators for KSP.</para>
+            </summary>
+        </member>
+    </members>
+</doc>
