@@ -18,52 +18,38 @@ namespace LunaManager
     /// </summary>
     public abstract class MainMenu
     {
-        /// <summary>
-        /// </summary>
-        const string ApiUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0";
+        private const string ApiUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0";
 
-        /// <summary>
-        /// </summary>
-        const string FileName = "LunaMultiplayerUpdater-Release.zip";
+        private const string FileName = "LunaMultiplayerUpdater-Release.zip";
 
-        /// <summary>
-        /// </summary>
-        static string _projectUrl = ($"{ApiUrl}/LunaMultiplayerUpdater-Release.zip");
+        private static string _projectUrl = $"{ApiUrl}/LunaMultiplayerUpdater-Release.zip";
 
-        /// <summary>
-        /// </summary>
-        static readonly string ClientFolderToDecompress = Path.Combine (Path.GetTempPath(),
-            "LMPClientUpdater");
+        private static readonly string ClientFolderToDecompress = Path.Combine (Path.GetTempPath(), "LMPClientUpdater");
 
-        /// <summary>
-        /// </summary>
-        static readonly string ServerFolderToDecompress = Path.Combine (Path.GetTempPath(),
-            "LMPServerUpdater");
+        private static readonly string ServerFolderToDecompress = Path.Combine (Path.GetTempPath(), "LMPServerUpdater");
 
-        /// <summary>
-        /// </summary>
-        static void CleanTempClientFiles()
+        private static void CleanTempClientFiles()
         {
-            try{
-                if (Directory.Exists (ClientFolderToDecompress)){
-                    Directory.Delete (ClientFolderToDecompress,
-                        true);
+            try
+            {
+                if (Directory.Exists (ClientFolderToDecompress))
+                {
+                    Directory.Delete (ClientFolderToDecompress, true);
                 }
-            } catch (Exception e){
+            }
+            catch (Exception e)
+            {
                 ForegroundColor = ConsoleColor.Red;
                 WriteLine (e);
             }
 
-            File.Delete (Path.Combine (Path.GetTempPath(),
-                FileName));
+            File.Delete (Path.Combine (Path.GetTempPath(), FileName));
         }
-
-        /// <summary>
-        /// </summary>
-        static void CleanTempServerFiles()
+        
+        private static void CleanTempServerFiles()
         {
             try{
-                if ((ServerFolderToDecompress != null) && Directory.Exists (ServerFolderToDecompress)){
+                if (ServerFolderToDecompress != null && Directory.Exists (ServerFolderToDecompress)){
                     Directory.Delete (ServerFolderToDecompress,
                         true);
                 }
@@ -76,16 +62,12 @@ namespace LunaManager
                 FileName));
         }
 
-        /// <summary>
-        /// </summary>
-        static void ClearScreen()
+        private static void ClearScreen()
         {
             ResetColor();
             Clear();
         }
-
-        /// <summary>
-        /// </summary>
+        
         // ReSharper disable once FunctionRecursiveOnAllPaths
         private static void ClientMenu()
         {
@@ -116,11 +98,11 @@ namespace LunaManager
 
             if (i == 4){
                 ClearScreen();
-                ShowKSPDir();
+                ShowKspDir();
             }
             if (i == 66){
                 ClearScreen();
-                GUITest();
+                GuiTest();
             }
 
             ForegroundColor = ConsoleColor.Red;
@@ -129,13 +111,12 @@ namespace LunaManager
             ResetColor();
             ClientMenu();
         }
-        private static void ShowKSPDir()
+        private static void ShowKspDir()
         {
             try
             {
                 var kspDir = Directory.GetCurrentDirectory();
-                using (var lunaServerProcess = (new Process
-                { StartInfo = (new ProcessStartInfo(kspDir) { FileName = kspDir, CreateNoWindow = true, UseShellExecute = true }) }))
+                using (var lunaServerProcess = new Process { StartInfo = new ProcessStartInfo(kspDir) { FileName = kspDir, CreateNoWindow = true, UseShellExecute = true } })
                 {
                     lunaServerProcess.Start();
                 }
@@ -148,13 +129,12 @@ namespace LunaManager
 
             ClientMenu();
         }
-        private static void GUITest()
+        private static void GuiTest()
         {
             try
             {
                 var lunaServer = @"LunaLauncher.dll";
-                using (var lunaServerProcess = (new Process
-                { StartInfo = (new ProcessStartInfo(lunaServer) { FileName = lunaServer, CreateNoWindow = true, UseShellExecute = true }) }))
+                using (var lunaServerProcess = new Process { StartInfo = new ProcessStartInfo(lunaServer) { FileName = lunaServer, CreateNoWindow = true, UseShellExecute = true } })
                 {
                     lunaServerProcess.Start();
                 }
@@ -170,7 +150,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void CopyClientFilesFromTempToDestination()
+        private static void CopyClientFilesFromTempToDestination()
         {
             var productFolderName = "LMPClientUpdater";
             foreach (var dirPath in Directory.GetDirectories(Path.Combine(ClientFolderToDecompress,
@@ -202,10 +182,10 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void CopyServerFilesFromTempToDestination()
+        private static void CopyServerFilesFromTempToDestination()
         {
             var productFolderName = "LMPServerUpdater";
-            var serverFolder = (Directory.GetCurrentDirectory() + "\\Server");
+            var serverFolder = Directory.GetCurrentDirectory() + "\\Server";
             foreach (var dirPath in Directory.GetDirectories(Path.Combine(ServerFolderToDecompress,
                                                                          productFolderName),
                                                             "*",
@@ -236,7 +216,7 @@ namespace LunaManager
         /// </summary>
         /// <param name="product"></param>
         /// <exception cref="InvalidEnumArgumentException"></exception>
-        static void DownloadAndReplaceFiles(ProductToDownload product)
+        private static void DownloadAndReplaceFiles(ProductToDownload product)
         {
             if (!Enum.IsDefined(typeof(ProductToDownload),
                                product))
@@ -244,7 +224,7 @@ namespace LunaManager
                                                        (int)product,
                                                        typeof(ProductToDownload));
             string downloadUrl;
-            using (var client = (new HttpClient { Timeout = TimeSpan.FromSeconds(30) }))
+            using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
             {
                 downloadUrl = GetDownloadUrlAsync(client).Result;
             }
@@ -257,7 +237,7 @@ namespace LunaManager
                 {
                     CleanTempClientFiles();
                     CleanTempServerFiles();
-                    using (var client = (new WebClient()))
+                    using (var client = new WebClient())
                     {
                         client.DownloadFile(downloadUrl,
                                             Path.Combine(Path.GetTempPath(),
@@ -295,22 +275,20 @@ namespace LunaManager
         /// <param name="client"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        static async Task<string> GetDownloadUrlAsync(HttpClient client)
+        private static async Task<string> GetDownloadUrlAsync(HttpClient client)
         {
-            HttpResponseMessage response;
-            HttpResponseMessage httpResponseMessage = await client.GetAsync(_projectUrl).ConfigureAwait(false);
+            var httpResponseMessage = await client.GetAsync(_projectUrl).ConfigureAwait(false);
             if (httpResponseMessage == null) throw new ArgumentNullException(nameof(httpResponseMessage));
-            using (response = httpResponseMessage)
+            using (var response = httpResponseMessage)
             {
                 response.EnsureSuccessStatusCode();
-
                 return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
         }
 
         /// <summary>
         /// </summary>
-        static void InstallDirCheck()
+        private static void InstallDirCheck()
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
             var folder = new DirectoryInfo(path).Name;
@@ -328,7 +306,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void KerbalLaunch()
+        private static void KerbalLaunch()
         {
             InstallDirCheck();
             SanityCheck();
@@ -350,7 +328,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void KerbalSafeLaunch()
+        private static void KerbalSafeLaunch()
         {
             ClearScreen();
             SanityCheck();
@@ -361,7 +339,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void LunaClientCheck()
+        private static void LunaClientCheck()
         {
             var lunaUpdater = @"ClientUpdater.exe";
 
@@ -372,11 +350,7 @@ namespace LunaManager
                 WriteLine(" The \"ClientUpdater.exe\" is not in the main KSP folder");
                 ResetColor();
                 WriteLine("Installing Luna Updater....");
-                _projectUrl =
-                    "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
-                using (var unused = new WebClient()) { }
-
-
+                _projectUrl = "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
                 if (!string.IsNullOrEmpty(_projectUrl))
                 {
                     WriteLine($"Downloading LMP from: {_projectUrl} Please wait...");
@@ -423,17 +397,17 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void LunaClientUpdate()
+        private static void LunaClientUpdate()
         {
             var lunaClientUpdater = @"ClientUpdater.exe";
             InstallDirCheck();
             SanityCheck();
             LunaClientCheck();
-            var lunaClientProcess = (new Process());
-            var newProcessStartInfo = (new ProcessStartInfo(lunaClientUpdater)
+            var lunaClientProcess = new Process();
+            var newProcessStartInfo = new ProcessStartInfo(lunaClientUpdater)
             {
                 UseShellExecute = false
-            });
+            };
             lunaClientProcess.StartInfo = newProcessStartInfo;
 
             lunaClientProcess.Start();
@@ -443,7 +417,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void LunaSafeClientUpdate()
+        private static void LunaSafeClientUpdate()
         {
             ClearScreen();
             SanityCheck();
@@ -454,7 +428,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void LunaSafeServerUpdate()
+        private static void LunaSafeServerUpdate()
         {
             ClearScreen();
             InstallDirCheck();
@@ -465,7 +439,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void LunaServerCheck()
+        private static void LunaServerCheck()
         {
             var lunaUpdater = @"ServerUpdater.exe";
             if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(),
@@ -477,7 +451,7 @@ namespace LunaManager
                 WriteLine(" The file \"ServerUpdater.exe\" is not in the Luna Server folder...");
                 ResetColor();
                 WriteLine("Installing Luna Updater....");
-                var extractPath = (Directory.GetCurrentDirectory() + "\\Server");
+                var extractPath = Directory.GetCurrentDirectory() + "\\Server";
                 Directory.CreateDirectory(extractPath);
                 _projectUrl =
                     "https://github.com/LunaMultiplayer/LunaMultiplayerUpdater/releases/download/1.0.0/LunaMultiplayerUpdater-Release.zip";
@@ -539,16 +513,16 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void LunaServerUpdate()
+        private static void LunaServerUpdate()
         {
             SanityCheck();
             LunaServerCheck();
             var lunaServerUpdater = @"ServerUpdater.exe";
-            using (var lunaServerUpdateProcess = (new Process
+            using (var lunaServerUpdateProcess = new Process
             {
-                StartInfo = (new ProcessStartInfo(lunaServerUpdater)
-                { WorkingDirectory = @"Server", FileName = lunaServerUpdater, CreateNoWindow = false, UseShellExecute = true })
-            }))
+                StartInfo = new ProcessStartInfo(lunaServerUpdater)
+                    { WorkingDirectory = @"Server", FileName = lunaServerUpdater, CreateNoWindow = false, UseShellExecute = true }
+            })
             {
                 lunaServerUpdateProcess.Start();
                 lunaServerUpdateProcess.WaitForExit();
@@ -561,10 +535,10 @@ namespace LunaManager
         /// </summary>
         /// <exception cref="InvalidOperationException">Condition.</exception>
         [STAThread]
-        static void Main()
+        private static void Main()
         { MainAsync(); }
 
-        static void MainAsync()
+        private static void MainAsync()
         {
             var arguments = Environment.GetCommandLineArgs();
             foreach (var unused in arguments){
@@ -587,13 +561,13 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void RunLunaServer()
+        private static void RunLunaServer()
         {
             try
             {
                 var lunaServer = @"Server.exe";
-                using (var lunaServerProcess = (new Process
-                { StartInfo = (new ProcessStartInfo(lunaServer) { WorkingDirectory = @"Server", FileName = lunaServer, CreateNoWindow = false, UseShellExecute = true }) }))
+                using (var lunaServerProcess = new Process
+                    { StartInfo = new ProcessStartInfo(lunaServer) { WorkingDirectory = @"Server", FileName = lunaServer, CreateNoWindow = false, UseShellExecute = true } })
                 {
                     lunaServerProcess.Start();
                 }
@@ -609,7 +583,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void SanityCheck()
+        private static void SanityCheck()
         {
             try
             {
@@ -661,7 +635,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void ServerMenu()
+        private static void ServerMenu()
         {
             LunaServerCheck();
             WriteLine(
@@ -711,7 +685,7 @@ namespace LunaManager
         /// <summary>
         /// 
         /// </summary>
-        static void ShowClientCommands()
+        private static void ShowClientCommands()
         {
             ForegroundColor = ConsoleColor.Magenta;
             WriteLine("1. Start up Kerbal Space Program ");
@@ -723,7 +697,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void ShowServerCommands()
+        private static void ShowServerCommands()
         {
             var fCount = Directory.GetFiles("Server",
                                             "*",
@@ -750,7 +724,7 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static void UninstallLuna()
+        private static void UninstallLuna()
         {
             WriteLine("============= Sad to see you go =============");
             WriteLine("Which would you like to remove?");
@@ -806,14 +780,14 @@ namespace LunaManager
 
         /// <summary>
         /// </summary>
-        static int Installed
+        private static int Installed
         {
             get; set;
         }
 
         /// <summary>
         /// </summary>
-        enum ProductToDownload
+        private enum ProductToDownload
         {
             Client = 0,
 
