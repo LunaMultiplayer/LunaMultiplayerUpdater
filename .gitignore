@@ -2,7 +2,6 @@
 *.userprefs
 .idea/
 .vs/
-obj/
 CommonUpdater/*.csproj.user
 CommonUpdater/bin/*
 CommonUpdater/obj/*
