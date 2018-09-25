@@ -4,9 +4,9 @@
 </p>
 
 <p align="center">
-  <a href="../../releases"><img src="https://img.shields.io/github/release/lunamultiplayer/lunamultiplayerupdater.svg" alt="Latest release" /></a>
-  <a href="../../releases"><img src="https://img.shields.io/github/downloads/lunamultiplayer/lunamultiplayerupdater/total.svg" alt="Total downloads" /></a>
-  <a href="../../"><img src="https://img.shields.io/github/search/lunamultiplayer/lunamultiplayerupdater/goto.svg" alt="Total hits" /></a>
+  <a href="../../releases"><img src="https://img.shields.io/github/release/lunamultiplayer/lunamultiplayerupdater.svg&style=flat&logo=github" alt="Latest release" /></a>
+  <a href="../../releases"><img src="https://img.shields.io/github/downloads/lunamultiplayer/lunamultiplayerupdater/total.svg&style=flat&logo=github" alt="Total downloads" /></a>
+  <a href="../../"><img src="https://img.shields.io/github/search/lunamultiplayer/lunamultiplayerupdater/goto.svg&style=flat&logo=github" alt="Total hits" /></a>
 </p>
 
 ---
