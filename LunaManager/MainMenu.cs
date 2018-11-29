@@ -68,49 +68,57 @@ namespace LunaManager
             Clear();
         }
         
-        // ReSharper disable once FunctionRecursiveOnAllPaths
         private static void ClientMenu()
         {
-            WriteLine (
-                "Welcome to a Kerbal Space Program CLI. This is for actively updating Luna Multiplayer during beta testing. \nBelow are some options that will hopefully make things a lot more simpler.");
+            while (true)
+            {
+                WriteLine("Welcome to a Kerbal Space Program CLI. This is for actively updating Luna Multiplayer during beta testing. \n" +
+                          "Below are some options that will hopefully make things a lot more simpler.");
 
-            WriteLine ("Options:");
-            ResetColor();
-            ShowClientCommands();
+                WriteLine("Options:");
+                ResetColor();
+                ShowClientCommands();
 
-            WriteLine ("Enter a number to choose:");
+                WriteLine("Enter a number to choose:");
 
-            var i = int.Parse (ReadLine() ?? throw new InvalidOperationException());
-            if (i == 1){
-                ClearScreen();
-                KerbalSafeLaunch();
+                var i = int.Parse(ReadLine() ?? throw new InvalidOperationException());
+                if (i == 1)
+                {
+                    ClearScreen();
+                    KerbalSafeLaunch();
+                }
+
+                if (i == 2)
+                {
+                    ClearScreen();
+                    LunaSafeClientUpdate();
+                }
+
+                if (i == 3)
+                {
+                    ClearScreen();
+                    ServerMenu();
+                }
+
+                if (i == 4)
+                {
+                    ClearScreen();
+                    ShowKspDir();
+                }
+
+                if (i == 66)
+                {
+                    ClearScreen();
+                    GuiTest();
+                }
+
+                ForegroundColor = ConsoleColor.Red;
+
+                WriteLine("Invalid Option\n");
+                ResetColor();
             }
-
-            if (i == 2){
-                ClearScreen();
-                LunaSafeClientUpdate();
-            }
-
-            if (i == 3){
-                ClearScreen();
-                ServerMenu();
-            }
-
-            if (i == 4){
-                ClearScreen();
-                ShowKspDir();
-            }
-            if (i == 66){
-                ClearScreen();
-                GuiTest();
-            }
-
-            ForegroundColor = ConsoleColor.Red;
-
-            WriteLine ("Invalid Option\n");
-            ResetColor();
-            ClientMenu();
         }
+
         private static void ShowKspDir()
         {
             try
@@ -633,58 +641,54 @@ namespace LunaManager
             }
         }
 
-        /// <summary>
-        /// </summary>
         private static void ServerMenu()
         {
-            LunaServerCheck();
-            WriteLine(
-                "Here you can operate and manage your Luna Multiplayer servers by choosing one of the options below.");
-            WriteLine("Options:");
-            ResetColor();
-            ShowServerCommands();
-
-            WriteLine("Enter a number to choose:");
-            var input = int.Parse(ReadLine() ?? throw new InvalidOperationException());
-            if (input == 1)
+            while (true)
             {
-                LunaSafeServerUpdate();
+                LunaServerCheck();
+                WriteLine("Here you can operate and manage your Luna Multiplayer servers by choosing one of the options below.");
+                WriteLine("Options:");
+                ResetColor();
+                ShowServerCommands();
+
+                WriteLine("Enter a number to choose:");
+                var input = int.Parse(ReadLine() ?? throw new InvalidOperationException());
+                if (input == 1)
+                {
+                    LunaSafeServerUpdate();
+                }
+
+                if (input == 2)
+                {
+                    ClearScreen();
+
+                    RunLunaServer();
+                }
+
+                if (input == 3)
+                {
+                    //ConfigureServer();
+                }
+
+                if (input == 4)
+                {
+                    ClearScreen();
+                    ClientMenu();
+                }
+
+                if (input == 000)
+                {
+                    ClearScreen();
+                    UninstallLuna();
+                }
+
+                ForegroundColor = ConsoleColor.Red;
+
+                WriteLine("Invalid Option\n");
+                ResetColor();
             }
-
-            if (input == 2)
-            {
-                ClearScreen();
-
-                RunLunaServer();
-            }
-
-            if (input == 3)
-            {
-                //ConfigureServer();
-            }
-
-            if (input == 4)
-            {
-                ClearScreen();
-                ClientMenu();
-            }
-
-            if (input == 000)
-            {
-                ClearScreen();
-                UninstallLuna();
-            }
-
-            ForegroundColor = ConsoleColor.Red;
-
-            WriteLine("Invalid Option\n");
-            ResetColor();
-            ServerMenu();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private static void ShowClientCommands()
         {
             ForegroundColor = ConsoleColor.Magenta;
@@ -695,8 +699,6 @@ namespace LunaManager
             ResetColor();
         }
 
-        /// <summary>
-        /// </summary>
         private static void ShowServerCommands()
         {
             var fCount = Directory.GetFiles("Server",
@@ -722,8 +724,6 @@ namespace LunaManager
             ResetColor();
         }
 
-        /// <summary>
-        /// </summary>
         private static void UninstallLuna()
         {
             WriteLine("============= Sad to see you go =============");
