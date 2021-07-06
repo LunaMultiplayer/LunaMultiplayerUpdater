@@ -15,7 +15,7 @@ namespace CommonUpdater
     {
         public const string ApiUrl = "https://ci.appveyor.com/api";
         public static string ProjectUrl = $"{ApiUrl}/projects/gavazquez/lunamultiplayer";
-        public const string FileName = "LunaMultiplayer-Debug.zip";
+        public const string FileName = "LunaMultiplayer-Client-Debug.zip";
         public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMP");
 
         public static void DownloadAndReplaceFiles(ProductToDownload product)
@@ -60,7 +60,9 @@ namespace CommonUpdater
 
         private static void CopyFilesFromTempToDestination(ProductToDownload product)
         {
-            var productFolderName = GetProductFolderName(product);
+            //var productFolderName = GetProductFolderName(product);
+            var productFolderName = "";
+            
             foreach (var dirPath in Directory.GetDirectories(Path.Combine(FolderToDecompress, productFolderName), "*", SearchOption.AllDirectories))
             {
                 var destFolder = dirPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
