@@ -15,16 +15,18 @@ namespace CommonUpdater
     {
         public const string ApiUrl = "https://ci.appveyor.com/api";
         public static string ProjectUrl = $"{ApiUrl}/projects/gavazquez/lunamultiplayer";
-        public const string FileName = "LunaMultiplayer-Client-Debug.zip";
+
         public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMP");
 
         public static void DownloadAndReplaceFiles(ProductToDownload product)
         {
+            var downloadFileName = GetDownloadFileName(product);
+
             string downloadUrl;
             using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                downloadUrl = GetDownloadUrl(client).Result;
+                downloadUrl = GetDownloadUrl(client, downloadFileName).Result;
             }
 
             if (!string.IsNullOrEmpty(downloadUrl))
@@ -32,15 +34,15 @@ namespace CommonUpdater
                 Console.WriteLine($"Downloading LMP from: {downloadUrl} Please wait...");
                 try
                 {
-                    CleanTempFiles();
+                    CleanTempFiles(downloadFileName);
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(downloadUrl, Path.Combine(Path.GetTempPath(), FileName));
-                        Console.WriteLine($"Downloading succeeded! Path: {Path.Combine(Path.GetTempPath(), FileName)}");
+                        client.DownloadFile(downloadUrl, Path.Combine(Path.GetTempPath(), downloadFileName));
+                        Console.WriteLine($"Downloading succeeded! Path: {Path.Combine(Path.GetTempPath(), downloadFileName)}");
                     }
 
                     Console.WriteLine($"Decompressing file to {FolderToDecompress}");
-                    ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), FileName), FolderToDecompress);
+                    ZipFile.ExtractToDirectory(Path.Combine(Path.GetTempPath(), downloadFileName), FolderToDecompress);
 
                     CopyFilesFromTempToDestination(product);
 
@@ -53,45 +55,43 @@ namespace CommonUpdater
                 }
                 finally
                 {
-                    CleanTempFiles();
+                    CleanTempFiles(downloadFileName);
                 }
             }
         }
 
         private static void CopyFilesFromTempToDestination(ProductToDownload product)
         {
-            //var productFolderName = GetProductFolderName(product);
-            var productFolderName = "";
-            
-            foreach (var dirPath in Directory.GetDirectories(Path.Combine(FolderToDecompress, productFolderName), "*", SearchOption.AllDirectories))
+
+            foreach (var dirPath in Directory.GetDirectories(FolderToDecompress, "*", SearchOption.AllDirectories))
             {
-                var destFolder = dirPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
+                var destFolder = dirPath.Replace(FolderToDecompress, Directory.GetCurrentDirectory());
                 Console.WriteLine($"Creating destination folder: {destFolder}");
                 Directory.CreateDirectory(destFolder);
             }
 
-            foreach (var newPath in Directory.GetFiles(Path.Combine(FolderToDecompress, productFolderName), "*.*", SearchOption.AllDirectories))
+            foreach (var newPath in Directory.GetFiles(FolderToDecompress, "*.*", SearchOption.AllDirectories))
             {
-                var destPath = newPath.Replace(Path.Combine(FolderToDecompress, productFolderName), Directory.GetCurrentDirectory());
+                var destPath = newPath.Replace(FolderToDecompress, Directory.GetCurrentDirectory());
                 Console.WriteLine($"Copying {Path.GetFileName(newPath)} to {destPath}");
                 File.Copy(newPath, destPath, true);
             }
         }
 
-        private static string GetProductFolderName(ProductToDownload product)
+        private static string GetDownloadFileName(ProductToDownload product)
         {
             switch (product)
             {
                 case ProductToDownload.Client:
-                    return "LMPClient";
+                    return "LunaMultiplayer-Client-Debug.zip";
                 case ProductToDownload.Server:
-                    return "LMPServer";
+                    return "LunaMultiplayer-Server-Debug.zip";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(product), product, null);
             }
         }
 
-        private static void CleanTempFiles()
+        private static void CleanTempFiles(string downloadFileName)
         {
             try
             {
@@ -103,10 +103,10 @@ namespace CommonUpdater
                 // ignored
             }
 
-            File.Delete(Path.Combine(Path.GetTempPath(), FileName));
+            File.Delete(Path.Combine(Path.GetTempPath(), downloadFileName));
         }
 
-        private static async Task<string> GetDownloadUrl(HttpClient client)
+        private static async Task<string> GetDownloadUrl(HttpClient client, string downloadFileName)
         {
             using (var response = await client.GetAsync(ProjectUrl))
             {
@@ -120,7 +120,7 @@ namespace CommonUpdater
                     if (job != null)
                     {
                         Console.WriteLine($"Downloading DEBUG version: {obj.build.version}");
-                        return $"{ApiUrl}/buildjobs/{job.jobId}/artifacts/{FileName}";
+                        return $"{ApiUrl}/buildjobs/{job.jobId}/artifacts/{downloadFileName}";
                     }
                 }
                 else
