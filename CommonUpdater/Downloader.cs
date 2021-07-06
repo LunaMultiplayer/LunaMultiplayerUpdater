@@ -18,15 +18,15 @@ namespace CommonUpdater
 
         public static string FolderToDecompress = Path.Combine(Path.GetTempPath(), "LMP");
 
-        public static void DownloadAndReplaceFiles(ProductToDownload product)
+        public static void DownloadAndReplaceFiles(ProductToDownload product, string buildVersion)
         {
-            var downloadFileName = GetDownloadFileName(product);
+            var downloadFileName = GetDownloadFileName(product, buildVersion);
 
             string downloadUrl;
             using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                downloadUrl = GetDownloadUrl(client, downloadFileName).Result;
+                downloadUrl = GetDownloadUrl(client, downloadFileName, buildVersion).Result;
             }
 
             if (!string.IsNullOrEmpty(downloadUrl))
@@ -84,14 +84,14 @@ namespace CommonUpdater
             }
         }
 
-        private static string GetDownloadFileName(ProductToDownload product)
+        private static string GetDownloadFileName(ProductToDownload product, string buildVersion)
         {
             switch (product)
             {
                 case ProductToDownload.Client:
-                    return "LunaMultiplayer-Client-Debug.zip";
+                    return $"LunaMultiplayer-Client-{buildVersion}.zip";
                 case ProductToDownload.Server:
-                    return "LunaMultiplayer-Server-Debug.zip";
+                    return $"LunaMultiplayer-Server-{buildVersion}.zip";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(product), product, null);
             }
@@ -112,7 +112,7 @@ namespace CommonUpdater
             File.Delete(Path.Combine(Path.GetTempPath(), downloadFileName));
         }
 
-        private static async Task<string> GetDownloadUrl(HttpClient client, string downloadFileName)
+        private static async Task<string> GetDownloadUrl(HttpClient client, string downloadFileName, string buildVersion)
         {
             using (var response = await client.GetAsync(ProjectUrl))
             {
@@ -122,10 +122,10 @@ namespace CommonUpdater
                 var obj = new JavaScriptSerializer().Deserialize<RootObject>(content);
                 if (obj.build.status == "success")
                 {
-                    var job = obj.build.jobs.FirstOrDefault(j => j.name.Contains("Debug"));
+                    var job = obj.build.jobs.FirstOrDefault(j => j.name.Contains(buildVersion));
                     if (job != null)
                     {
-                        Console.WriteLine($"Downloading DEBUG version: {obj.build.version}");
+                        Console.WriteLine($"Downloading {buildVersion} version: {obj.build.version}");
                         return $"{ApiUrl}/buildjobs/{job.jobId}/artifacts/{downloadFileName}";
                     }
                 }
