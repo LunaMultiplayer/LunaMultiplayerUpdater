@@ -63,16 +63,22 @@ namespace CommonUpdater
         private static void CopyFilesFromTempToDestination(ProductToDownload product)
         {
 
-            foreach (var dirPath in Directory.GetDirectories(FolderToDecompress, "*", SearchOption.AllDirectories))
+            // select correct sub-folder for server zip
+            var decompressFromFolder = FolderToDecompress;
+            if (product == ProductToDownload.Server) {
+                decompressFromFolder = Path.Combine(FolderToDecompress, "LMPServer");
+            }
+
+            foreach (var dirPath in Directory.GetDirectories(decompressFromFolder, "*", SearchOption.AllDirectories))
             {
-                var destFolder = dirPath.Replace(FolderToDecompress, Directory.GetCurrentDirectory());
+                var destFolder = dirPath.Replace(decompressFromFolder, Directory.GetCurrentDirectory());
                 Console.WriteLine($"Creating destination folder: {destFolder}");
                 Directory.CreateDirectory(destFolder);
             }
 
-            foreach (var newPath in Directory.GetFiles(FolderToDecompress, "*.*", SearchOption.AllDirectories))
+            foreach (var newPath in Directory.GetFiles(decompressFromFolder, "*.*", SearchOption.AllDirectories))
             {
-                var destPath = newPath.Replace(FolderToDecompress, Directory.GetCurrentDirectory());
+                var destPath = newPath.Replace(decompressFromFolder, Directory.GetCurrentDirectory());
                 Console.WriteLine($"Copying {Path.GetFileName(newPath)} to {destPath}");
                 File.Copy(newPath, destPath, true);
             }
