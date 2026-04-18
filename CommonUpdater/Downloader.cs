@@ -91,7 +91,7 @@ namespace CommonUpdater
                 case ProductToDownload.Client:
                     return $"LunaMultiplayer-Client-{buildVersion}.zip";
                 case ProductToDownload.Server:
-                    return $"LunaMultiplayer-Server-{buildVersion}.zip";
+                    return $"LunaMultiplayer-Server-any-{buildVersion}.zip";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(product), product, null);
             }
